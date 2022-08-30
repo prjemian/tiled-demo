@@ -1,0 +1,36 @@
+name: tiled
+
+# micromamba create -n tiled -f environment.yml -y
+# micromamba activate tiled
+
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python >=3.8
+  - alembic
+  - appdirs
+  - cachey
+  - databroker
+  - h5py
+  - hdf5plugin
+  - httpx
+  - ipython
+  - jmespath
+  - matplotlib
+  - orjson
+  - pandas
+  - pip
+  - punx
+  - pyarrow
+  - pycrypto
+  - python-jose
+  - spec2nexus
+  - sqlalchemy
+  - typer
+  - uvicorn
+  - watchgod
+
+  - pip:
+    - tiled

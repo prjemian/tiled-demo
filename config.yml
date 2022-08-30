@@ -1,0 +1,33 @@
+# config.yml
+
+# tiled serve config --public config.yml
+
+trees:
+
+  - path: dhtioc_mbr
+    tree: tiled.adapters.files:DirectoryAdapter.from_directory
+    args:
+      directory: ../raw/porch/2020/11
+      mimetypes_by_file_ext:
+        .txt: text/dhtioc_data
+      # mimetype_detection_hook: custom:detect_mimetype
+      readers_by_mimetype:
+        text/dhtioc_data: custom:read_dhtioc
+
+  - path: usaxs_h5
+    tree: tiled.adapters.files:DirectoryAdapter.from_directory
+    args:
+      directory: ../2021_10_05_Gadikota_usaxs/10_05_Gadikota_usaxs/
+      key_from_filename: tiled.adapters.files:identity
+      mimetypes_by_file_ext:
+        .h5: application/x-hdf5
+        # .jpg: image/jpeg  # TODO: needs a _reader_
+        # writer: https://blueskyproject.io/tiled/how-to/custom-export-formats.html?highlight=jpeg#binary-format-example
+
+  - path: punx_data
+    tree: tiled.adapters.files:DirectoryAdapter.from_directory
+    args:
+      directory: ../projects/prjemian/punx/punx/data
+      mimetypes_by_file_ext:
+        .nx5: application/x-hdf5
+        .nexus.hdf5: application/x-hdf5
