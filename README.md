@@ -17,6 +17,7 @@ Getting started with the new tiled server and handling of custom formats.
 
 - Write a custom data file identifier and loader.
 - Support the example files shown.
+- Authentication
 
 ### Stretch goals
 
