@@ -11,19 +11,22 @@ Getting started with the new tiled server and handling of custom formats.
   - [Local Directories with Examples](#local-directories-with-examples)
   - [Python environment](#python-environment)
   - [Identify Custom Files](#identify-custom-files)
-  - [Configuration file](#configuration-file)
 
 ## Goals
 
-- [ ] Write a custom data file identifier and loader.
-- [ ] Support the example files shown.
+- [ ] Write a custom data file identifier.
+- [x] Write a custom data file loader.
+- [ ] Identify NeXus/HDF5 files with arbitrary names.
+- [ ] Identify SPEC data files with arbitrary names and read them.
 - [ ] Authentication
 
 ### Stretch goals
 
+- [ ] Read `.jpg` files.
+- [ ] Learn how to ignore files such as `.xml` (without startup comments).
 - [ ] Handle the `.npy` file with the 10,000+ images. (maybe unrealistic)
 - [ ] Handle all examples in `punx` and `spec2nexus`
-- [x] Handle the [synApps MDA format](https://github.com/epics-modules/sscan/blob/master/documentation/saveData_fileFormat.txt) ([Python support](https://github.com/EPICS-synApps/utils/blob/master/mdaPythonUtils/INSTALL.md))
+- [x] Read the [synApps MDA format](https://github.com/epics-modules/sscan/blob/master/documentation/saveData_fileFormat.txt) ([Python support](https://github.com/EPICS-synApps/utils/blob/master/mdaPythonUtils/INSTALL.md))
 
 ## Links
 
@@ -57,28 +60,4 @@ def detect_mimetype(filepath, mimetype):
         ...
         mimetype = "text/csv"
     return mimetype
-```
-
-## Configuration file
-
-```yml
-# config.yml
-trees:
-
-    tree: specdata
-    args:
-        directory: /home/prjemian/Documents/specdata/
-        mimetypes_by_file_ext:
-        .dat: text/spec_data
-
-    # tree: files
-    # args:
-    #     directory: path/to/directory
-    #     mimetypes_by_file_ext:
-    #     .stuff: text/csv
-
-    # tree: custom_files
-    # args:
-    #     directory: path/to/custom/directory
-    #     mimetype_detection_hook: custom:detect_mimetype
 ```
