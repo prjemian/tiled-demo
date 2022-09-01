@@ -5,7 +5,7 @@
 Getting started with the new tiled server and handling of custom formats.
 
 - [tiled-demo](#tiled-demo)
-  - [Goal](#goal)
+  - [Goals](#goals)
     - [Stretch goals](#stretch-goals)
   - [Links](#links)
   - [Local Directories with Examples](#local-directories-with-examples)
@@ -23,7 +23,7 @@ Getting started with the new tiled server and handling of custom formats.
 
 - [ ] Handle the `.npy` file with the 10,000+ images. (maybe unrealistic)
 - [ ] Handle all examples in `punx` and `spec2nexus`
-- [ ] Handle the [synApps MDA format](https://github.com/epics-modules/sscan/blob/master/documentation/saveData_fileFormat.txt) ([Python support](https://github.com/EPICS-synApps/utils/blob/master/mdaPythonUtils/INSTALL.md))
+- [x] Handle the [synApps MDA format](https://github.com/epics-modules/sscan/blob/master/documentation/saveData_fileFormat.txt) ([Python support](https://github.com/EPICS-synApps/utils/blob/master/mdaPythonUtils/INSTALL.md))
 
 ## Links
 
