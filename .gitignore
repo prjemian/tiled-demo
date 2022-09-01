@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# local developer code
+dev_*.py
+
+# Microsoft VisualStudio Code Editor
+.vscode/
