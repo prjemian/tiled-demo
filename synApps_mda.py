@@ -39,6 +39,16 @@ def read_mda(filename):
         metadata["version"] = round(metadata["version"], 2)
     if len(mda_obj) != metadata["rank"] + 1:
         raise ValueError(f"rank={metadata['rank']} but {len(mda_obj)=}")
+
+    # TODO: refactor into a hierarchical structure
+    # MapAdapter(scans, metadata=file_md)
+    # scans["scan1"] = {}
+    # scans["scan2"] = {}
+    # scans["scan..."] = {}
+    # each scan is MapAdapter(P_and_D_array_dict, metadata=scan_md)
+    # each array_dict_value is ArrayAdapter.from_array(arr, metadata=array_md)
+    # ... work this out ...
+
     content = {}
     for scan in mda_obj[1:]:
         prefix = f"S{scan.rank}_"
