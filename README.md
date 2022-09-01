@@ -13,17 +13,17 @@ Getting started with the new tiled server and handling of custom formats.
   - [Identify Custom Files](#identify-custom-files)
   - [Configuration file](#configuration-file)
 
-## Goal
+## Goals
 
-- Write a custom data file identifier and loader.
-- Support the example files shown.
-- Authentication
+- [ ] Write a custom data file identifier and loader.
+- [ ] Support the example files shown.
+- [ ] Authentication
 
 ### Stretch goals
 
-- Handle the `.npy` file with the 10,000+ images. (maybe unrealistic)
-- Handle all examples in `punx` and `spec2nexus`
-- Handle the [synApps MDA format](https://github.com/epics-modules/sscan/blob/master/documentation/saveData_fileFormat.txt) ([Python support](https://github.com/EPICS-synApps/utils/blob/master/mdaPythonUtils/INSTALL.md))
+- [ ] Handle the `.npy` file with the 10,000+ images. (maybe unrealistic)
+- [ ] Handle all examples in `punx` and `spec2nexus`
+- [ ] Handle the [synApps MDA format](https://github.com/epics-modules/sscan/blob/master/documentation/saveData_fileFormat.txt) ([Python support](https://github.com/EPICS-synApps/utils/blob/master/mdaPythonUtils/INSTALL.md))
 
 ## Links
 
