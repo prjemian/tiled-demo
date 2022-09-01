@@ -1,8 +1,9 @@
 """Read the synApps MDA file format."""
 
 from tiled.adapters.dataframe import DataFrameAdapter
+from tiled.adapters.array import ArrayAdapter
+from tiled.adapters.mapping import MapAdapter
 import mda
-import pandas
 import pathlib
 
 
@@ -84,7 +85,7 @@ def read_mda(filename):
             v["EPICS_PV"] = as_str(trigger.name)
             content[f"{prefix}T{i}"]  = v
 
-    # sift out data from metadata
+    # build nested structure for tiled
     key_list = [
         k
         for k, v in content.items()
@@ -92,13 +93,10 @@ def read_mda(filename):
     ]
     data = {}
     for k in key_list:
-        data[k] = content[k].pop("data").tolist()
-        metadata[k] = content.pop(k)
+        arr = content[k].pop("data")
+        data[k] = ArrayAdapter.from_array(arr, metadata=content[k])
 
-    return DataFrameAdapter.from_pandas(
-        pandas.DataFrame(data), npartitions=1, metadata=metadata
-    )
-
+    return MapAdapter(data, metadata=metadata)
 
 def main():
     path = pathlib.Path().home() / "Documents" / "projects" / "NeXus" / "exampledata" / "APS" / "scan2nexus"

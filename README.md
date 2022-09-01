@@ -1,10 +1,10 @@
-# tiled
+# tiled-demo
 
 <!-- 2022-08-29 -->
 
 Getting started with the new tiled server and handling of custom formats.
 
-- [tiled](#tiled)
+- [tiled-demo](#tiled-demo)
   - [Goal](#goal)
     - [Stretch goals](#stretch-goals)
   - [Links](#links)
