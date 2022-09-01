@@ -31,4 +31,13 @@ trees:
       mimetypes_by_file_ext:
         .nx5: application/x-hdf5
         .nexus.hdf5: application/x-hdf5
+
+  - path: mda_data
+    tree: tiled.adapters.files:DirectoryAdapter.from_directory
+    args:
+      directory: ../projects/NeXus/exampledata/APS/scan2nexus
+      mimetypes_by_file_ext:
         .mda: application/x-mda
+        .nexus: application/x-hdf5
+      readers_by_mimetype:
+        application/x-mda: synApps_mda:read_mda
