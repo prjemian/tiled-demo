@@ -34,3 +34,4 @@ dependencies:
 
   - pip:
     - tiled
+    - https://raw.githubusercontent.com/EPICS-synApps/utils/master/mdaPythonUtils/mdalib-2013.post2-py2.py3-none-any.whl

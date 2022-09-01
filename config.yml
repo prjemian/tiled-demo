@@ -31,3 +31,4 @@ trees:
       mimetypes_by_file_ext:
         .nx5: application/x-hdf5
         .nexus.hdf5: application/x-hdf5
+        .mda: application/x-mda
