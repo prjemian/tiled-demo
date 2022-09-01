@@ -73,12 +73,6 @@ def detect_mimetype(filename, mimetype):
 
     return mimetype
 
-"""
-(tiled) prjemian@zap:~/Documents/tiled-demo$ !tiled
-tiled serve config config.yml
-ValidationError while parsing configuration file config.yml: {'tree': 'dhtioc_mbr', 'args': {'directory': '../raw/porch/2020/11', 'mimetype_detection_hook': 'custom:detect_mimetype', 'readers_by_mimetype': {'text/dhtioc_data': 'custom:read_dhtioc'}}} is not of type 'array'
-Aborted.
-"""
 
 def read_dhtioc(filename):
     """
@@ -94,30 +88,24 @@ def read_dhtioc(filename):
     md = {}
     for n, content in enumerate(buf):
         if content.startswith("# IOC prefix: "):
-            md["IOC_prefix"] = content[len("# IOC prefix: "):].strip()
+            md["IOC_prefix"] = content[len("# IOC prefix: ") :].strip()
             break
         elif n < 5 and content.strip() != "#":
             p = content.find(": ")
             key = content[:p].lstrip("#").strip()
-            value = content[p+1:].strip()
+            value = content[p + 1 :].strip()
             md[key] = value
     md["humidity"] = dict(
         description="relative humidity, %",
         units="%",
-        pvname=f"{md['IOC_prefix']}humidity"
+        pvname=f"{md['IOC_prefix']}humidity",
     )
     md["temperature"] = dict(
-        description="temperature, C",
-        units="C",
-        pvname=f"{md['IOC_prefix']}temperature"
+        description="temperature, C", units="C", pvname=f"{md['IOC_prefix']}temperature"
     )
 
     numbers = numpy.array(
-        [
-            list(map(float, line.split()))
-            for line in buf
-            if not line.startswith("#")
-        ]
+        [list(map(float, line.split())) for line in buf if not line.startswith("#")]
     ).T
     df = DataFrame(
         dict(
