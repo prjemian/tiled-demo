@@ -5,6 +5,8 @@ from tiled.adapters.mapping import MapAdapter
 import mda
 import pathlib
 
+EXTENSIONS = [".mda"]
+MIMETYPE = "application/x-mda"
 
 def as_str(v):
     if isinstance(v, bytes):
@@ -74,6 +76,7 @@ def read_mda_scan(scan):
         PV=as_str(scan.name),
         rank=scan.rank,
         time=as_str(scan.time),  # TODO: convert to timestamp (need TZ)
+        time_zone="US/Central (assumed since not in MDA file)"
     )
     arrays = {}
     for detector in scan.d:
@@ -115,7 +118,7 @@ def main():
         / "scan2nexus"
     )
     for filename in sorted(path.iterdir()):
-        if filename.name.endswith(".mda"):
+        if filename.name.endswith(EXTENSIONS[0]):
             structure = read_mda(filename)
             print(f"{filename.name=}")
             print(structure)
