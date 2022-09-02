@@ -3,10 +3,10 @@
 from tiled.adapters.array import ArrayAdapter
 from tiled.adapters.mapping import MapAdapter
 import mda
-import pathlib
 
 EXTENSIONS = [".mda"]
 MIMETYPE = "application/x-mda"
+
 
 def as_str(v):
     if isinstance(v, bytes):
@@ -38,28 +38,23 @@ def read_mda_header(mda_obj):
 
 
 def read_mda_scan_detector(detector):
-    md = {
-        k: getattr(detector, k)
-        for k in "desc fieldName number unit".split()
-    }
+    md = {k: getattr(detector, k) for k in "desc fieldName number unit".split()}
     md["EPICS_PV"] = as_str(detector.name)
     return md["fieldName"], ArrayAdapter.from_array(detector.data, metadata=md)
 
 
 def read_mda_scan_positioner(positioner):
-    md = {
-        k: getattr(positioner, k)
-        for k in """
-            desc
-            fieldName
-            number
-            readback_desc
-            readback_name
-            readback_unit
-            step_mode
-            unit
-        """.split()
-    }
+    md_attrs = """
+        desc
+        fieldName
+        number
+        readback_desc
+        readback_name
+        readback_unit
+        step_mode
+        unit
+    """.split()
+    md = {k: getattr(positioner, k) for k in md_attrs}
     md["readback_PV"] = md.pop("readback_name")  # rename
     md["EPICS_PV"] = as_str(positioner.name)
     return md["fieldName"], ArrayAdapter.from_array(positioner.data, metadata=md)
@@ -76,7 +71,7 @@ def read_mda_scan(scan):
         PV=as_str(scan.name),
         rank=scan.rank,
         time=as_str(scan.time),  # TODO: convert to timestamp (need TZ)
-        time_zone="US/Central (assumed since not in MDA file)"
+        time_zone="US/Central (assumed since not in MDA file)",
     )
     arrays = {}
     for detector in scan.d:
@@ -108,6 +103,8 @@ def read_mda(filename):
 
 
 def main():
+    import pathlib
+
     path = (
         pathlib.Path().home()
         / "Documents"
@@ -121,7 +118,7 @@ def main():
         if filename.name.endswith(EXTENSIONS[0]):
             structure = read_mda(filename)
             print(f"{filename.name=}")
-            print(structure)
+            print(f"{structure}")
 
 
 if __name__ == "__main__":

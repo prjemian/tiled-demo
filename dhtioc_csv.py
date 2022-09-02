@@ -80,7 +80,7 @@ def read_dhtioc(filename):
     arrays = {}
     arrays["timestamp"] = ArrayAdapter.from_array(
         numbers[0],
-        metadata=dict(description="Linux EPOCH, seconds since 1970-01-01 UTC")
+        metadata=dict(description="Linux EPOCH, seconds since 1970-01-01 UTC"),
     )
     arrays["humidity"] = ArrayAdapter.from_array(
         numbers[1],
@@ -88,25 +88,21 @@ def read_dhtioc(filename):
             description="relative humidity, %",
             units="%",
             EPICS_PV=f"{IOC}humidity",
-        )
+        ),
     )
     arrays["temperature"] = ArrayAdapter.from_array(
         numbers[2],
         metadata=dict(
-            description="temperature, C",
-            units="C",
-            EPICS_PV=f"{IOC}temperature"
-        )
+            description="temperature, C", units="C", EPICS_PV=f"{IOC}temperature"
+        ),
     )
 
     # derived
     arrays["Fahrenheit"] = ArrayAdapter.from_array(
-        numbers[2]*1.8+32,
+        numbers[2] * 1.8 + 32,
         metadata=dict(
-            description="temperature, F",
-            units="F",
-            EPICS_PV=f"{IOC}temperature"
-        )
+            description="temperature, F", units="F", EPICS_PV=f"{IOC}temperature"
+        ),
     )
 
     # derived: Report human-readable times

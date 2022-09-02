@@ -2,7 +2,7 @@
 
 <!-- 2022-08-29 -->
 
-Getting started with the new tiled server and handling of custom formats.
+Demonstrate tiled server and handling of custom formats.
 
 - [tiled-demo](#tiled-demo)
   - [Goals](#goals)
@@ -14,10 +14,10 @@ Getting started with the new tiled server and handling of custom formats.
 
 ## Goals
 
-- [ ] Write a custom data file identifier.
+- [x] Write a custom data file identifier.
 - [x] Write a custom data file loader.
 - [ ] Identify NeXus/HDF5 files with arbitrary names.
-- [ ] Identify SPEC data files with arbitrary names and read them.
+- [x] Identify SPEC data files with arbitrary names and read them.
 - [ ] Authentication
 
 ### Stretch goals

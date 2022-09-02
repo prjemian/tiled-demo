@@ -1,0 +1,74 @@
+#F /home/prjemian/Documents/projects/BCDA-APS/bluesky_training/20210904-233114.dat
+#E 1630816274
+#D Sat Sep 04 23:31:14 2021
+#C Bluesky  user = prjemian  host = zap
+#O0 
+#o0 
+
+#S 313  scan(detectors=['noisy'], num=21, args='['m1', -1.1, 1.1]', per_step='None')
+#D Sat Sep 04 23:31:14 2021
+#C Sat Sep 04 23:31:14 2021.  plan_type = generator
+#C Sat Sep 04 23:31:14 2021.  uid = 7247c37a-5c5a-41c4-b42c-93e643f510d5
+#MD uid = 7247c37a-5c5a-41c4-b42c-93e643f510d5
+#MD beamline_id = Bluesky_training
+#MD detectors = ['noisy']
+#MD instrument_name = Bluesky Case Studies
+#MD login_id = prjemian@zap
+#MD motors = ('m1',)
+#MD notebook = sscan_1d_flyer
+#MD num_intervals = 20
+#MD num_points = 21
+#MD objective = Demonstrate UB matrix save & restore
+#MD pid = 1408529
+#MD plan_pattern = inner_product
+#MD plan_pattern_args = {'num': 21, 'args': ["MyEpicsMotor(prefix='gp:m1', name='m1', settle_time=0.0, timeout=None, read_attrs=['user_readback', 'user_setpoint'], configuration_attrs=['user_offset', 'user_offset_dir', 'velocity', 'acceleration', 'motor_egu'])", -1.1, 1.1]}
+#MD plan_pattern_module = bluesky.plan_patterns
+#MD proposal_id = training
+#MD versions = {'apstools': '1.5.1+13.g8e58b3f', 'bluesky': '1.6.7', 'databroker': '1.2.2', 'epics': '3.4.3', 'h5py': '3.2.1', 'intake': '0.6.2', 'matplotlib': '3.3.4', 'numpy': '1.20.1', 'ophyd': '1.6.1', 'pyRestTable': '2020.0.3', 'spec2nexus': '2021.1.8'}
+#P0 
+#N 5
+#L m1  Epoch_float  Epoch  m1_user_setpoint  noisy
+-1.1 2.713763475418091 3 -1.1 999.0908799265125
+-0.99 3.0521280765533447 3 -0.9900000000000001 1144.584084109786
+-0.88 3.457968235015869 3 -0.8800000000000001 1495.4871433193482
+-0.77 3.8595221042633057 4 -0.77 1860.6758690416473
+-0.66 4.260221719741821 4 -0.66 2484.2724378706694
+-0.55 4.6617608070373535 5 -0.55 3225.8619719669427
+-0.44 5.062762022018433 5 -0.43999999999999995 4743.172553749186
+-0.33 5.463481903076172 5 -0.32999999999999996 7764.520165898328
+-0.22 5.864553213119507 6 -0.21999999999999997 13343.767238297769
+-0.11 6.266133785247803 6 -0.10999999999999999 28160.54393576998
+0.0 6.667670488357544 7 0.0 68850.85010028983
+0.11 7.0679261684417725 7 0.1100000000000001 84350.8677013331
+0.22 7.469205856323242 7 0.2200000000000002 35973.235214593864
+0.33 7.871962308883667 8 0.33000000000000007 15961.824691918844
+0.44 8.27220344543457 8 0.44000000000000017 8789.563553278682
+0.55 8.675425291061401 9 0.55 5326.733524902345
+0.66 9.074858903884888 9 0.6600000000000001 3694.16380951061
+0.77 9.476174592971802 9 0.7700000000000002 2706.0823685064124
+0.88 9.877938032150269 10 0.8800000000000001 1933.4106947913901
+0.99 10.278555870056152 10 0.9900000000000002 1533.5758314051789
+1.1 10.674885034561157 11 1.1 1260.557364815712
+#C Sat Sep 04 23:31:24 2021.  num_events_baseline = 2
+#C Sat Sep 04 23:31:24 2021.  num_events_primary = 21
+#C Sat Sep 04 23:31:24 2021.  exit_status = success
+
+#S 314  fly()
+#D Sat Sep 04 23:31:27 2021
+#C Sat Sep 04 23:31:27 2021.  plan_type = generator
+#C Sat Sep 04 23:31:27 2021.  uid = 80aa2128-28a1-4b84-be4d-c0082c225179
+#MD uid = 80aa2128-28a1-4b84-be4d-c0082c225179
+#MD beamline_id = Bluesky_training
+#MD instrument_name = Bluesky Case Studies
+#MD login_id = prjemian@zap
+#MD notebook = sscan_1d_flyer
+#MD objective = Demonstrate UB matrix save & restore
+#MD pid = 1408529
+#MD proposal_id = training
+#MD versions = {'apstools': '1.5.1+13.g8e58b3f', 'bluesky': '1.6.7', 'databroker': '1.2.2', 'epics': '3.4.3', 'h5py': '3.2.1', 'intake': '0.6.2', 'matplotlib': '3.3.4', 'numpy': '1.20.1', 'ophyd': '1.6.1', 'pyRestTable': '2020.0.3', 'spec2nexus': '2021.1.8'}
+#P0 
+#N 0
+#C no data column labels identified
+#C Sat Sep 04 23:31:44 2021.  num_events_baseline = 2
+#C Sat Sep 04 23:31:44 2021.  num_events_flyer = 71
+#C Sat Sep 04 23:31:44 2021.  exit_status = success

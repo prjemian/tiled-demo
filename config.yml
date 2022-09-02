@@ -18,24 +18,6 @@ trees:
       readers_by_mimetype:
         text/dhtioc_data: dhtioc_csv:read_dhtioc
 
-  - path: usaxs_h5
-    tree: files
-    args:
-      directory: ../../../2021_10_05_Gadikota_usaxs/10_05_Gadikota_usaxs/
-      key_from_filename: tiled.adapters.files:identity
-      mimetypes_by_file_ext:
-        .h5: application/x-hdf5
-        # .jpg: image/jpeg  # TODO: needs a _reader_
-        # writer: https://blueskyproject.io/tiled/how-to/custom-export-formats.html?highlight=jpeg#binary-format-example
-
-  - path: punx_data
-    tree: files
-    args:
-      directory: ../punx/punx/data
-      mimetypes_by_file_ext:
-        .nx5: application/x-hdf5
-        .nexus.hdf5: application/x-hdf5
-
   - path: mda_data
     tree: files
     args:
@@ -45,3 +27,65 @@ trees:
         .nexus: application/x-hdf5
       readers_by_mimetype:
         application/x-mda: synApps_mda:read_mda
+
+  - path: punx_data
+    tree: files
+    args:
+      directory: ../punx/punx/data
+      mimetypes_by_file_ext:
+        .nx5: application/x-hdf5
+        .nexus.hdf5: application/x-hdf5
+
+  - path: specdata
+    tree: files
+    args:
+      directory: ../../../specdata
+      mimetype_detection_hook: custom:detect_mimetype
+      # mimetypes_by_file_ext:
+      #   .dat: text/spec_data
+      readers_by_mimetype:
+        text/spec_data: spec_data:read_spec_data
+
+  - path: spec2nexus_data
+    tree: files
+    args:
+      directory: ../spec2nexus/src/spec2nexus/data
+      mimetypes_by_file_ext:
+        .dat: text/spec_data
+        .spc: text/spec_data
+        .spe: text/spec_data
+        .spec: text/spec_data
+        .nx5: application/x-hdf5
+        .nexus.hdf5: application/x-hdf5
+      mimetype_detection_hook: custom:detect_mimetype
+      readers_by_mimetype:
+        text/spec_data: spec_data:read_spec_data
+
+  - path: test
+    tree: files
+    args:
+      directory: ./data
+      key_from_filename: tiled.adapters.files:identity
+      mimetype_detection_hook: custom:detect_mimetype
+      mimetypes_by_file_ext:
+        .dat: text/spec_data
+        .h5: application/x-hdf5
+        .hdf: application/x-hdf5
+        # .jpg: image/jpeg  # TODO: needs a _reader_
+        # writer: https://blueskyproject.io/tiled/how-to/custom-export-formats.html?highlight=jpeg#binary-format-example
+      readers_by_mimetype:
+        text/spec_data: spec_data:read_spec_data
+
+  - path: usaxs_user
+    tree: files
+    args:
+      directory: ../../../2021_10_05_Gadikota_usaxs
+      key_from_filename: tiled.adapters.files:identity
+      mimetypes_by_file_ext:
+        .dat: text/spec_data
+        .h5: application/x-hdf5
+        .hdf: application/x-hdf5
+        # .jpg: image/jpeg  # TODO: needs a _reader_
+        # writer: https://blueskyproject.io/tiled/how-to/custom-export-formats.html?highlight=jpeg#binary-format-example
+      readers_by_mimetype:
+        text/spec_data: spec_data:read_spec_data
