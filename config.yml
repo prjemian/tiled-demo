@@ -1,13 +1,17 @@
 # config.yml
 
-# tiled serve config --public config.yml
+# tiled serve config --public --host 0.0.0.0 config.yml
+
+# authentication:
+#     # allow_anonymous_access: true
+#     single_user_api_key: FakeApiKey
 
 trees:
 
-  - path: dhtioc_mbr
-    tree: tiled.adapters.files:DirectoryAdapter.from_directory
+  - path: dht_porch
+    tree: files
     args:
-      directory: ../../../raw/porch/2020/11
+      directory: ../../../raw/porch/
       mimetypes_by_file_ext:
         .txt: text/dhtioc_data
       # mimetype_detection_hook: custom:detect_mimetype
@@ -15,7 +19,7 @@ trees:
         text/dhtioc_data: dhtioc_csv:read_dhtioc
 
   - path: usaxs_h5
-    tree: tiled.adapters.files:DirectoryAdapter.from_directory
+    tree: files
     args:
       directory: ../../../2021_10_05_Gadikota_usaxs/10_05_Gadikota_usaxs/
       key_from_filename: tiled.adapters.files:identity
@@ -25,7 +29,7 @@ trees:
         # writer: https://blueskyproject.io/tiled/how-to/custom-export-formats.html?highlight=jpeg#binary-format-example
 
   - path: punx_data
-    tree: tiled.adapters.files:DirectoryAdapter.from_directory
+    tree: files
     args:
       directory: ../punx/punx/data
       mimetypes_by_file_ext:
@@ -33,7 +37,7 @@ trees:
         .nexus.hdf5: application/x-hdf5
 
   - path: mda_data
-    tree: tiled.adapters.files:DirectoryAdapter.from_directory
+    tree: files
     args:
       directory: ../../NeXus/exampledata/APS/scan2nexus
       mimetypes_by_file_ext:
