@@ -3,7 +3,6 @@
 from tiled.adapters.array import ArrayAdapter
 from tiled.adapters.mapping import MapAdapter
 import mda
-import pathlib
 
 EXTENSIONS = [".mda"]
 MIMETYPE = "application/x-mda"
@@ -108,6 +107,7 @@ def read_mda(filename):
 
 
 def main():
+    import pathlib
     path = (
         pathlib.Path().home()
         / "Documents"
@@ -121,7 +121,7 @@ def main():
         if filename.name.endswith(EXTENSIONS[0]):
             structure = read_mda(filename)
             print(f"{filename.name=}")
-            print(structure)
+            print(f"{structure}")
 
 
 if __name__ == "__main__":
