@@ -13,17 +13,10 @@ def as_str(v):
     return v
 
 
-def read_mda(filename):
-    mda_obj = mda.readMDA(
-        str(filename),
-        useNumpy=True,
-        verbose=False,
-        showHelp=False,
-    )
-    # read the "header"
+def read_mda_header(mda_obj):
     h_obj = mda_obj[0]
-    metadata = {key: h_obj[key] for key in h_obj["ourKeys"] if key != "ourKeys"}
-    metadata["PVs"] = {
+    file_md = {key: h_obj[key] for key in h_obj["ourKeys"] if key != "ourKeys"}
+    file_md["PVs"] = {
         as_str(key): dict(
             desc=as_str(values[0]),
             unit=as_str(values[1]),
@@ -34,68 +27,82 @@ def read_mda(filename):
         for key, values in h_obj.items()
         if key not in h_obj["ourKeys"]
     }
-    if "version" in metadata:
+    if "version" in file_md:
         # fix the truncation error of 1.299999...
-        metadata["version"] = round(metadata["version"], 2)
-    if len(mda_obj) != metadata["rank"] + 1:
-        raise ValueError(f"rank={metadata['rank']} but {len(mda_obj)=}")
+        file_md["version"] = round(file_md["version"], 2)
+    if len(mda_obj) != file_md["rank"] + 1:
+        raise ValueError(f"rank={file_md['rank']} but {len(mda_obj)=}")
 
-    # TODO: refactor into a hierarchical structure
-    # MapAdapter(scans, metadata=file_md)
-    # scans["scan1"] = {}
-    # scans["scan2"] = {}
-    # scans["scan..."] = {}
-    # each scan is MapAdapter(P_and_D_array_dict, metadata=scan_md)
-    # each array_dict_value is ArrayAdapter.from_array(arr, metadata=array_md)
-    # ... work this out ...
+    return file_md
 
-    content = {}
-    for scan in mda_obj[1:]:
-        prefix = f"S{scan.rank}_"
-        # print(f"{scan.rank=}")
-        content[f"{prefix}time"] = as_str(
-            scan.time
-        )  # TODO: convert to timestamp (must assume a time zone)
-        content[f"{prefix}number_requested"] = scan.npts
-        content[f"{prefix}number_acquired"] = scan.curr_pt
-        for detector in scan.d:
-            v = {
-                k: getattr(detector, k)
-                for k in "data desc fieldName number unit".split()
-            }
-            v["EPICS_PV"] = as_str(detector.name)
-            content[f"{prefix}{v['fieldName']}"] = v
-        for positioner in scan.p:
-            v = {
-                k: getattr(positioner, k)
-                for k in """
-                    data
-                    desc
-                    fieldName
-                    number
-                    readback_desc
-                    readback_name
-                    readback_unit
-                    step_mode
-                    unit
-                """.split()
-            }
-            v["readback_PV"] = v.pop("readback_name")  # rename
-            v["EPICS_PV"] = as_str(positioner.name)
-            content[f"{prefix}{v['fieldName']}"] = v
-        for i, trigger in enumerate(scan.t, start=1):
-            v = {k: getattr(trigger, k) for k in "command number".split()}
-            v["EPICS_PV"] = as_str(trigger.name)
-            content[f"{prefix}T{i}"] = v
 
-    # build nested structure for tiled
-    key_list = [k for k, v in content.items() if isinstance(v, dict) and "data" in v]
-    data = {}
-    for k in key_list:
-        arr = content[k].pop("data")
-        data[k] = ArrayAdapter.from_array(arr, metadata=content[k])
+def read_mda_scan_detector(detector):
+    md = {
+        k: getattr(detector, k)
+        for k in "desc fieldName number unit".split()
+    }
+    md["EPICS_PV"] = as_str(detector.name)
+    return md["fieldName"], ArrayAdapter.from_array(detector.data, metadata=md)
 
-    return MapAdapter(data, metadata=metadata)
+
+def read_mda_scan_positioner(positioner):
+    md = {
+        k: getattr(positioner, k)
+        for k in """
+            desc
+            fieldName
+            number
+            readback_desc
+            readback_name
+            readback_unit
+            step_mode
+            unit
+        """.split()
+    }
+    md["readback_PV"] = md.pop("readback_name")  # rename
+    md["EPICS_PV"] = as_str(positioner.name)
+    return md["fieldName"], ArrayAdapter.from_array(positioner.data, metadata=md)
+
+
+def read_mda_scan(scan):
+    scan_md = dict(
+        dim=scan.dim,
+        number_detectors=scan.nd,
+        number_points_acquired=scan.curr_pt,
+        number_points_requested=scan.npts,
+        number_positioners=scan.np,
+        number_triggers=scan.nt,
+        PV=as_str(scan.name),
+        rank=scan.rank,
+        time=as_str(scan.time),  # TODO: convert to timestamp (need TZ)
+    )
+    arrays = {}
+    for detector in scan.d:
+        k, v = read_mda_scan_detector(detector)
+        arrays[k] = v
+    for positioner in scan.p:
+        k, v = read_mda_scan_positioner(positioner)
+        arrays[k] = v
+
+    for i, trigger in enumerate(scan.t, start=1):
+        # stored with scan metadata
+        v = {k: getattr(trigger, k) for k in "command number".split()}
+        v["EPICS_PV"] = as_str(trigger.name)
+        scan_md[f"T{i}"] = v
+
+    return MapAdapter(arrays, metadata=scan_md)
+
+
+def read_mda(filename):
+    mda_obj = mda.readMDA(
+        str(filename),
+        useNumpy=True,
+        verbose=False,
+        showHelp=False,
+    )
+    file_md = read_mda_header(mda_obj)
+    scans = {f"S{scan.rank}": read_mda_scan(scan) for scan in mda_obj[1:]}
+    return MapAdapter(scans, metadata=file_md)
 
 
 def main():

@@ -7,7 +7,7 @@ trees:
   - path: dhtioc_mbr
     tree: tiled.adapters.files:DirectoryAdapter.from_directory
     args:
-      directory: ../raw/porch/2020/11
+      directory: ../../../raw/porch/2020/11
       mimetypes_by_file_ext:
         .txt: text/dhtioc_data
       # mimetype_detection_hook: custom:detect_mimetype
@@ -17,7 +17,7 @@ trees:
   - path: usaxs_h5
     tree: tiled.adapters.files:DirectoryAdapter.from_directory
     args:
-      directory: ../2021_10_05_Gadikota_usaxs/10_05_Gadikota_usaxs/
+      directory: ../../../2021_10_05_Gadikota_usaxs/10_05_Gadikota_usaxs/
       key_from_filename: tiled.adapters.files:identity
       mimetypes_by_file_ext:
         .h5: application/x-hdf5
@@ -27,7 +27,7 @@ trees:
   - path: punx_data
     tree: tiled.adapters.files:DirectoryAdapter.from_directory
     args:
-      directory: ../projects/prjemian/punx/punx/data
+      directory: ../punx/punx/data
       mimetypes_by_file_ext:
         .nx5: application/x-hdf5
         .nexus.hdf5: application/x-hdf5
@@ -35,7 +35,7 @@ trees:
   - path: mda_data
     tree: tiled.adapters.files:DirectoryAdapter.from_directory
     args:
-      directory: ../projects/NeXus/exampledata/APS/scan2nexus
+      directory: ../../NeXus/exampledata/APS/scan2nexus
       mimetypes_by_file_ext:
         .mda: application/x-mda
         .nexus: application/x-hdf5
