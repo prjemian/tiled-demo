@@ -5,6 +5,8 @@ from tiled.adapters.mapping import MapAdapter
 import mda
 import pathlib
 
+EXTENSIONS = [".mda"]
+MIMETYPE = "application/x-mda"
 
 def as_str(v):
     if isinstance(v, bytes):
@@ -116,7 +118,7 @@ def main():
         / "scan2nexus"
     )
     for filename in sorted(path.iterdir()):
-        if filename.name.endswith(".mda"):
+        if filename.name.endswith(EXTENSIONS[0]):
             structure = read_mda(filename)
             print(f"{filename.name=}")
             print(structure)
