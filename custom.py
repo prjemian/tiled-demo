@@ -7,9 +7,8 @@ https://blueskyproject.io/tiled/how-to/read-custom-formats.html
 from punx.utils import isHdf5FileObject
 from punx.utils import isNeXusFile
 from spec2nexus.spec import is_spec_file_with_header
-from tiled.adapters.dataframe import DataFrameAdapter
-from pandas import DataFrame
-import dask
+from tiled.adapters.array import ArrayAdapter
+from tiled.adapters.mapping import MapAdapter
 import datetime
 import numpy
 
@@ -95,24 +94,52 @@ def read_dhtioc(filename):
             key = content[:p].lstrip("#").strip()
             value = content[p + 1 :].strip()
             md[key] = value
-    md["humidity"] = dict(
-        description="relative humidity, %",
-        units="%",
-        pvname=f"{md['IOC_prefix']}humidity",
-    )
+    IOC = md["IOC_prefix"]
     md["temperature"] = dict(
-        description="temperature, C", units="C", pvname=f"{md['IOC_prefix']}temperature"
+        description="temperature, C", units="C", pvname=f"{IOC}temperature"
     )
 
+    # fmt: off
     numbers = numpy.array(
-        [list(map(float, line.split())) for line in buf if not line.startswith("#")]
+        [
+            list(map(float, line.split()))
+            for line in buf
+            if not line.startswith("#")
+        ]
     ).T
-    df = DataFrame(
-        dict(
-            timestamp=numbers[0],
-            humidity=numbers[1],
-            temperature=numbers[2],
-            iso8601=list(map(str, map(datetime.datetime.fromtimestamp, numbers[0]))),
+    # fmt: on
+    arrays = {}
+    arrays["timestamp"] = ArrayAdapter.from_array(
+        numbers[0],
+        metadata=dict(description="Linux EPOCH, seconds since 1970-01-01 UTC")
+    )
+    arrays["humidity"] = ArrayAdapter.from_array(
+        numbers[1],
+        metadata=dict(
+            description="relative humidity, %",
+            units="%",
+            EPICS_PV=f"{IOC}humidity",
         )
     )
-    return DataFrameAdapter.from_pandas(df, npartitions=1, metadata=md)
+    arrays["temperature"] = ArrayAdapter.from_array(
+        numbers[2],
+        metadata=dict(
+            description="temperature, C",
+            units="C",
+            EPICS_PV=f"{IOC}temperature"
+        )
+    )
+    arrays["Fahrenheit"] = ArrayAdapter.from_array(
+        numbers[2]*1.8+32,
+        metadata=dict(
+            description="temperature, F",
+            units="F",
+            EPICS_PV=f"{IOC}temperature"
+        )
+    )
+    # FIXME: cannot supply list of string?
+    # arrays["iso8601"] = ArrayAdapter(
+    #     list(map(str, map(datetime.datetime.fromtimestamp, numbers[0]))),
+    #     metadata=dict(description="ISO-8601 time string")
+    # )
+    return MapAdapter(arrays, metadata=md)
