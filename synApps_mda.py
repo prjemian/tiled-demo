@@ -1,6 +1,5 @@
 """Read the synApps MDA file format."""
 
-from tiled.adapters.dataframe import DataFrameAdapter
 from tiled.adapters.array import ArrayAdapter
 from tiled.adapters.mapping import MapAdapter
 import mda
