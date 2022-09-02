@@ -74,6 +74,7 @@ def read_mda_scan(scan):
         PV=as_str(scan.name),
         rank=scan.rank,
         time=as_str(scan.time),  # TODO: convert to timestamp (need TZ)
+        time_zone="US/Central (assumed since not in MDA file)"
     )
     arrays = {}
     for detector in scan.d:
