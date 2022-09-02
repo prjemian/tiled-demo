@@ -9,9 +9,7 @@ from punx.utils import isNeXusFile
 from spec2nexus.spec import is_spec_file_with_header
 from tiled.adapters.array import ArrayAdapter
 from tiled.adapters.mapping import MapAdapter
-import datetime
 import dhtioc_csv
-import numpy
 
 
 FILE_OF_UNRECOGNIZED_FILE_TYPES = "/tmp/unrecognized_files.txt"

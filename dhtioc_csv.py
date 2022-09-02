@@ -2,6 +2,8 @@
 
 from tiled.adapters.array import ArrayAdapter
 from tiled.adapters.mapping import MapAdapter
+import datetime
+import numpy
 
 EXTENSIONS = [".txt"]
 MIMETYPE = "text/dhtioc_data"
@@ -67,7 +69,9 @@ def read_dhtioc(filename):
     # fmt: off
     numbers = numpy.array(
         [
-            list(map(float, line.split()))
+            list(
+                map(float, line.split())
+            )
             for line in buf
             if not line.startswith("#")
         ]
@@ -94,6 +98,8 @@ def read_dhtioc(filename):
             EPICS_PV=f"{IOC}temperature"
         )
     )
+
+    # derived
     arrays["Fahrenheit"] = ArrayAdapter.from_array(
         numbers[2]*1.8+32,
         metadata=dict(
@@ -102,9 +108,19 @@ def read_dhtioc(filename):
             EPICS_PV=f"{IOC}temperature"
         )
     )
-    # FIXME: cannot supply list of string?
-    # arrays["iso8601"] = ArrayAdapter(
-    #     list(map(str, map(datetime.datetime.fromtimestamp, numbers[0]))),
-    #     metadata=dict(description="ISO-8601 time string")
-    # )
+
+    # derived: Report human-readable times
+    # fmt: off
+    arrays["iso8601"] = ArrayAdapter.from_array(
+        numpy.char.array(
+            list(
+                map(
+                    str,
+                    map(datetime.datetime.fromtimestamp, numbers[0])
+                )
+            )
+        ),
+        metadata=dict(description="ISO-8601 time string")
+    )
+    # fmt: on
     return MapAdapter(arrays, metadata=md)
