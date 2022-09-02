@@ -12,7 +12,7 @@ trees:
         .txt: text/dhtioc_data
       # mimetype_detection_hook: custom:detect_mimetype
       readers_by_mimetype:
-        text/dhtioc_data: custom:read_dhtioc
+        text/dhtioc_data: dhtioc_csv:read_dhtioc
 
   - path: usaxs_h5
     tree: tiled.adapters.files:DirectoryAdapter.from_directory
