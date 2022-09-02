@@ -85,8 +85,8 @@ def read_spec_data(filename):
         raise spec.NotASpecDataFile(str(filename))
     sdf = spec.SpecDataFile(str(filename))
     md = dict(
-        fileName = str(sdf.fileName),
-        specFile = str(sdf.specFile),
+        fileName=str(sdf.fileName),
+        specFile=str(sdf.specFile),
     )
     # header metadata  (sdf.headers is a list)
     if hasattr(sdf, "headers") and len(sdf.headers) > 0:
@@ -102,7 +102,7 @@ def read_spec_data(filename):
                 h_md["iso8601"] = f"{datetime.datetime.fromtimestamp(header.epoch)}"
             if hasattr(header, "comments") and len(header.comments) > 0:
                 h_md["comments"] = {
-                    f"C{c}" : comment
+                    f"C{c}": comment
                     for c, comment in enumerate(header.comments, start=1)
                 }
 
@@ -117,6 +117,7 @@ def read_spec_data(filename):
 
 def main():
     import pathlib
+
     spec2nexus_data_path = (
         pathlib.Path().home()
         / "Documents"
