@@ -16,16 +16,16 @@ Demonstrate tiled server and handling of custom formats.
 
 - [x] Write a custom data file identifier.
 - [x] Write a custom data file loader.
-- [ ] Identify NeXus/HDF5 files with arbitrary names.
+- [x] Identify NeXus/HDF5 files with arbitrary names.
 - [x] Identify SPEC data files with arbitrary names and read them.
 - [ ] Authentication
 
 ### Stretch goals
 
-- [ ] Read `.jpg` files.
-- [ ] Learn how to ignore files such as `.xml` (without startup comments).
+- [x] Read `.jpg` files.
+- [x] Learn how to ignore files such as `.xml` (without startup comments).
 - [ ] Handle the `.npy` file with the 10,000+ images. (maybe unrealistic)
-- [ ] Handle all examples in `punx` and `spec2nexus`
+- [x] Handle all examples in `punx` and `spec2nexus`
 - [x] Read the [synApps MDA format](https://github.com/epics-modules/sscan/blob/master/documentation/saveData_fileFormat.txt) ([Python support](https://github.com/EPICS-synApps/utils/blob/master/mdaPythonUtils/INSTALL.md))
 
 ## Links
