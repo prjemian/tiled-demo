@@ -3,6 +3,7 @@ Read a variety of image file formats as input for tiled.
 """
 
 from PIL import Image
+from PIL.TiffImagePlugin import IFDRational
 from tiled.adapters.array import ArrayAdapter
 from tiled.adapters.mapping import MapAdapter
 import numpy
@@ -14,7 +15,6 @@ ROOT = pathlib.Path(__file__).parent
 EXTENSIONS = []
 # https://mimetype.io/all-types#image
 MIMETYPES = """
-    image/avif
     image/bmp
     image/gif
     image/jpeg
@@ -23,14 +23,23 @@ MIMETYPES = """
     image/vnd.microsoft.icon
     image/webp
 """.split()
+# TODO:     image/avif  not handled by PIL
 # TODO:     image/svg+xml  not handled by PIL
 
 EMPTY_ARRAY = numpy.array([0,0])
 
 
+def interpret_IFDRational(data):
+    if not isinstance(data, IFDRational):
+        raise TypeError(f"{data} is not of type {IFDRational.__class__}")
+    attrs = "numerator denominator imag".split()
+    md = {k: getattr(data, k) for k in attrs}
+    md["real"] = float(data.numerator) / data.denominator
+    return md
+
+
 def interpret_exif(image):
     from PIL.ExifTags import TAGS
-    from PIL.TiffImagePlugin import IFDRational
 
     exif = image.getexif()
     md = {}
@@ -38,12 +47,11 @@ def interpret_exif(image):
         # get the tag name, instead of human unreadable tag id
         tag = TAGS.get(tag_id, tag_id)
         data = exif.get(tag_id)
-        # decode bytes 
+        # decode bytes
         if isinstance(data, bytes):
             data = data.decode()
         if isinstance(data, IFDRational):
-            attrs = "numerator denominator imag".split()
-            data = {k: getattr(data, k) for k in attrs}
+            data = interpret_IFDRational(data)
         md[tag] = data
     return md
 
@@ -64,11 +72,34 @@ def image_metadata(image):
     """.split()
     md = {k: getattr(image, k) for k in attrs if hasattr(image, k)}
 
-    # TODO: "image.info" will need special handling
-    if "info" in md:
+    if len(image.info) > 0:
+        md["info"] = {}
+        md["info"].update(image.info)
+    info = md.get("info")
+    if info is not None:
         for k in "exif icc_profile xmp".split():
-            if k in md["info"]:
-                md["info"].pop(k)
+            if k in info:
+                info.pop(k)
+        for k in "dpi resolution".split():
+            # fmt: off
+            if k in info:
+                items = []
+                for data in info[k]:
+                    if isinstance(data, IFDRational):
+                        v = interpret_IFDRational(data)
+                    else:
+                        v = data
+                    items.append(v)
+                info[k] = tuple(items)
+            # fmt: on
+        value = info.get("version")
+        if isinstance(value, bytes):
+            info["version"] = value.decode()
+        value = info.get("extension")
+        if isinstance(value, tuple) and isinstance(value[0], bytes):
+            info["extension"] = (value[0].decode(), value[1])
+
+    # print(yaml.dump(md))
 
     exif = interpret_exif(image)
     if len(exif) > 0:
@@ -80,15 +111,14 @@ def image_metadata(image):
 
 
 def read_image(filename):
+    fn = pathlib.Path(filename).name
     try:
         image = Image.open(filename)
         md = image_metadata(image)
 
-        # special cases
-        if image.format == "GIF":
-            pass
-        elif image.format == "SVG":
-            pass
+        # # special cases
+        # if image.format == "AVIF":
+        #     pass
 
         im = image.getdata()
         pixels = list(im)  # 1-D array of int or tuple
