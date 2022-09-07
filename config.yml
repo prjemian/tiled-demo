@@ -8,58 +8,67 @@
 
 trees:
 
-  # - path: dht_porch
-  #   tree: files
-  #   args:
-  #     directory: ../../../raw/porch/
-  #     mimetypes_by_file_ext:
-  #       .txt: text/dhtioc_data
-  #     # mimetype_detection_hook: custom:detect_mimetype
-  #     readers_by_mimetype:
-  #       text/dhtioc_data: dhtioc_csv:read_dhtioc
+  - path: dht_porch
+    tree: files
+    args:
+      directory: ../../../raw/porch/
+      mimetypes_by_file_ext:
+        .txt: text/dhtioc_data
+      # mimetype_detection_hook: custom:detect_mimetype
+      readers_by_mimetype:
+        text/dhtioc_data: dhtioc_csv:read_dhtioc
 
-  # - path: mda_data
-  #   tree: files
-  #   args:
-  #     directory: ../../NeXus/exampledata/APS/scan2nexus
-  #     mimetypes_by_file_ext:
-  #       .mda: application/x-mda
-  #       .nexus: application/x-hdf5
-  #     readers_by_mimetype:
-  #       application/x-mda: synApps_mda:read_mda
+  - path: mda_data
+    tree: files
+    args:
+      directory: ../../NeXus/exampledata/APS/scan2nexus
+      mimetype_detection_hook: custom:detect_mimetype
+      mimetypes_by_file_ext:
+        .mda: application/x-mda
+        .nexus: application/x-hdf5
+        .mda.text: text/x-ignore
+        .py: text/x-ignore
+        .xml: text/x-ignore
+      readers_by_mimetype:
+        application/x-mda: synApps_mda:read_mda
+        text/x-ignore: ignore_data:read_ignore
+        text/readme: ignore_data:read_ignore
 
-  # - path: punx_data
-  #   tree: files
-  #   args:
-  #     directory: ../punx/punx/data
-  #     mimetypes_by_file_ext:
-  #       .nx5: application/x-hdf5
-  #       .nexus.hdf5: application/x-hdf5
+  - path: punx_data
+    tree: files
+    args:
+      directory: ../punx/punx/data
+      mimetypes_by_file_ext:
+        .nx5: application/x-hdf5
+        .nexus.hdf5: application/x-hdf5
 
-  # - path: specdata
-  #   tree: files
-  #   args:
-  #     directory: ../../../specdata
-  #     mimetype_detection_hook: custom:detect_mimetype
-  #     # mimetypes_by_file_ext:
-  #     #   .dat: text/spec_data
-  #     readers_by_mimetype:
-  #       text/spec_data: spec_data:read_spec_data
+  - path: specdata
+    tree: files
+    args:
+      directory: ../../../specdata
+      mimetype_detection_hook: custom:detect_mimetype
+      # mimetypes_by_file_ext:
+      #   .dat: text/spec_data
+      readers_by_mimetype:
+        text/spec_data: spec_data:read_spec_data
 
-  # - path: spec2nexus_data
-  #   tree: files
-  #   args:
-  #     directory: ../spec2nexus/spec2nexus/data
-  #     mimetypes_by_file_ext:
-  #       .dat: text/spec_data
-  #       .spc: text/spec_data
-  #       .spe: text/spec_data
-  #       .spec: text/spec_data
-  #       .nx5: application/x-hdf5
-  #       .nexus.hdf5: application/x-hdf5
-  #     mimetype_detection_hook: custom:detect_mimetype
-  #     readers_by_mimetype:
-  #       text/spec_data: spec_data:read_spec_data
+  - path: spec2nexus_data
+    tree: files
+    args:
+      directory: ../spec2nexus/spec2nexus/data
+      mimetypes_by_file_ext:
+        .dat: text/spec_data
+        .md: text/x-ignore
+        .nexus.hdf5: application/x-hdf5
+        .nx5: application/x-hdf5
+        .spc: text/spec_data
+        .spe: text/spec_data
+        .spec: text/spec_data
+        .txt: text/x-ignore
+      mimetype_detection_hook: custom:detect_mimetype
+      readers_by_mimetype:
+        text/spec_data: spec_data:read_spec_data
+        text/x-ignore: ignore_data:read_ignore
 
   - path: test
     tree: files
@@ -68,14 +77,13 @@ trees:
       key_from_filename: tiled.adapters.files:identity
       mimetype_detection_hook: custom:detect_mimetype
       mimetypes_by_file_ext:
-        .u1.strict_disabled.avif: image/avif
         .avif: image/avif
         .dat: text/spec_data
         .h5: application/x-hdf5
         .hdf: application/x-hdf5
         .webp: image/webp
       readers_by_mimetype:
-        image/avif: ignore_data:read_ignore
+        image/avif: image_data:read_image
         image/bmp: image_data:read_image
         image/gif: image_data:read_image
         image/jpeg: image_data:read_image
@@ -88,17 +96,18 @@ trees:
         text/markdown: ignore_data:read_ignore
         text/spec_data: spec_data:read_spec_data
 
-  # - path: usaxs_user
-  #   tree: files
-  #   args:
-  #     directory: ../../../2021_10_05_Gadikota_usaxs
-  #     key_from_filename: tiled.adapters.files:identity
-  #     mimetypes_by_file_ext:
-  #       .dat: text/spec_data
-  #       .h5: application/x-hdf5
-  #       .hdf: application/x-hdf5
-  #       # .jpg: image/jpeg  # TODO: needs a _reader_
-  #       # writer: https://blueskyproject.io/tiled/how-to/custom-export-formats.html?highlight=jpeg#binary-format-example
-  #     readers_by_mimetype:
-  #       text/spec_data: spec_data:read_spec_data
-  #       image/jpeg: image_data:read_image
+  - path: usaxs_user
+    tree: files
+    args:
+      directory: ../../../2021_10_05_Gadikota_usaxs
+      key_from_filename: tiled.adapters.files:identity
+      mimetypes_by_file_ext:
+        .dat: text/spec_data
+        .h5: application/x-hdf5
+        .hdf: application/x-hdf5
+        .py: text/x-ignore
+      readers_by_mimetype:
+        image/jpeg: image_data:read_image
+        image/png: image_data:read_image
+        text/spec_data: spec_data:read_spec_data
+        text/x-ignore: ignore_data:read_ignore
