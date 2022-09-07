@@ -22,11 +22,17 @@ trees:
     tree: files
     args:
       directory: ../../NeXus/exampledata/APS/scan2nexus
+      mimetype_detection_hook: custom:detect_mimetype
       mimetypes_by_file_ext:
         .mda: application/x-mda
         .nexus: application/x-hdf5
+        .mda.text: text/x-ignore
+        .py: text/x-ignore
+        .xml: text/x-ignore
       readers_by_mimetype:
         application/x-mda: synApps_mda:read_mda
+        text/x-ignore: ignore_data:read_ignore
+        text/readme: ignore_data:read_ignore
 
   - path: punx_data
     tree: files
@@ -49,17 +55,20 @@ trees:
   - path: spec2nexus_data
     tree: files
     args:
-      directory: ../spec2nexus/src/spec2nexus/data
+      directory: ../spec2nexus/spec2nexus/data
       mimetypes_by_file_ext:
         .dat: text/spec_data
+        .md: text/x-ignore
+        .nexus.hdf5: application/x-hdf5
+        .nx5: application/x-hdf5
         .spc: text/spec_data
         .spe: text/spec_data
         .spec: text/spec_data
-        .nx5: application/x-hdf5
-        .nexus.hdf5: application/x-hdf5
+        .txt: text/x-ignore
       mimetype_detection_hook: custom:detect_mimetype
       readers_by_mimetype:
         text/spec_data: spec_data:read_spec_data
+        text/x-ignore: ignore_data:read_ignore
 
   - path: test
     tree: files
@@ -68,12 +77,23 @@ trees:
       key_from_filename: tiled.adapters.files:identity
       mimetype_detection_hook: custom:detect_mimetype
       mimetypes_by_file_ext:
+        .avif: image/avif
         .dat: text/spec_data
         .h5: application/x-hdf5
         .hdf: application/x-hdf5
-        # .jpg: image/jpeg  # TODO: needs a _reader_
-        # writer: https://blueskyproject.io/tiled/how-to/custom-export-formats.html?highlight=jpeg#binary-format-example
+        .webp: image/webp
       readers_by_mimetype:
+        image/avif: image_data:read_image
+        image/bmp: image_data:read_image
+        image/gif: image_data:read_image
+        image/jpeg: image_data:read_image
+        image/png: image_data:read_image
+        image/svg+xml: ignore_data:read_ignore
+        image/tiff: image_data:read_image
+        image/vnd.microsoft.icon: image_data:read_image
+        image/webp: image_data:read_image
+        image/x-ms-bmp: image_data:read_image
+        text/markdown: ignore_data:read_ignore
         text/spec_data: spec_data:read_spec_data
 
   - path: usaxs_user
@@ -85,7 +105,9 @@ trees:
         .dat: text/spec_data
         .h5: application/x-hdf5
         .hdf: application/x-hdf5
-        # .jpg: image/jpeg  # TODO: needs a _reader_
-        # writer: https://blueskyproject.io/tiled/how-to/custom-export-formats.html?highlight=jpeg#binary-format-example
+        .py: text/x-ignore
       readers_by_mimetype:
+        image/jpeg: image_data:read_image
+        image/png: image_data:read_image
         text/spec_data: spec_data:read_spec_data
+        text/x-ignore: ignore_data:read_ignore
