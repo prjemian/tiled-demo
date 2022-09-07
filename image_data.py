@@ -91,12 +91,13 @@ def read_image(filename):
             pass
 
         im = image.getdata()
-        if im.bands == 1:
-            dimensions = im.size
-        else:
-            dimensions = (im.bands, *im.size)
-        pixels = numpy.array(list(im)).reshape(dimensions)
-        print(yaml.dump(md))
+        pixels = list(im)  # 1-D array of int or tuple
+        shape = list(reversed(im.size))
+        if im.bands > 1:
+            shape.append(im.bands)
+        pixels = numpy.array(pixels).reshape(shape)
+        if len(shape) > 2:
+            pixels = numpy.moveaxis(pixels, -1, 0)  # put the colors first
         return ArrayAdapter.from_array(pixels, metadata=md)
 
     except Exception as exc:
