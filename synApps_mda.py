@@ -40,8 +40,6 @@ def read_mda_header(mda_obj):
 def read_mda_scan_detector(detector):
     md = {k: getattr(detector, k) for k in "desc fieldName number unit".split()}
     md["EPICS_PV"] = as_str(detector.name)
-    md["shape"] = detector.data.shape
-    md["datatype"] = detector.data.dtype.name
     return md["fieldName"], ArrayAdapter.from_array(detector.data, metadata=md)
 
 
@@ -59,8 +57,6 @@ def read_mda_scan_positioner(positioner):
     md = {k: getattr(positioner, k) for k in md_attrs}
     md["readback_PV"] = md.pop("readback_name")  # rename
     md["EPICS_PV"] = as_str(positioner.name)
-    md["shape"] = positioner.data.shape
-    md["datatype"] = positioner.data.dtype.name
     return md["fieldName"], ArrayAdapter.from_array(positioner.data, metadata=md)
 
 
