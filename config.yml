@@ -8,6 +8,12 @@
 
 trees:
 
+  - path: training
+    tree: databroker.mongo_normalized:Tree.from_uri
+    args:
+      # for unsecured access
+      uri: mongodb://localhost:27017/training-bluesky
+
   - path: dht_porch
     tree: files
     args:
