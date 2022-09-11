@@ -33,7 +33,7 @@ dependencies:
   - watchgod
 
   - pip:
-    - tiled
+    - tiled[all]
     # old version: 2.1
     # - https://raw.githubusercontent.com/EPICS-synApps/utils/master/mdaPythonUtils/mdalib-2013.post2-py2.py3-none-any.whl
     # new version: 2.1.1
