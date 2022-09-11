@@ -133,3 +133,7 @@ dev_*.py
 
 # Microsoft VisualStudio Code Editor
 .vscode/
+
+# Authentication
+*auth*
+*credentials*
