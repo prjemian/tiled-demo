@@ -17,6 +17,7 @@ dependencies:
   - hdf5plugin
   - httpx
   - ipython
+  - ldap3
   - jmespath
   - matplotlib
   - orjson
