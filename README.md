@@ -6,11 +6,8 @@ Demonstrate tiled server and handling of custom formats.
 
 - [tiled-demo](#tiled-demo)
   - [Goals](#goals)
-    - [Stretch goals](#stretch-goals)
+  - [Stretch goals](#stretch-goals)
   - [Links](#links)
-  - [Local Directories with Examples](#local-directories-with-examples)
-  - [Python environment](#python-environment)
-  - [Identify Custom Files](#identify-custom-files)
 
 ## Goals
 
@@ -20,7 +17,7 @@ Demonstrate tiled server and handling of custom formats.
 - [x] Identify SPEC data files with arbitrary names and read them.
 - [ ] Authentication
 
-### Stretch goals
+## Stretch goals
 
 - [x] Read `.jpg` files.
 - [x] Learn how to ignore files such as `.xml` (without startup comments).
@@ -30,34 +27,5 @@ Demonstrate tiled server and handling of custom formats.
 
 ## Links
 
-- https://github.com/bluesky/tiled/issues/175
-- https://blueskyproject.io/tiled/how-to/read-custom-formats.html#case-2-no-file-extension
-
-## Local Directories with Examples
-
-directory | file content
---- | ---
-`~/Documents/2021_10_05_Gadikota_usaxs/` | mixed content, typical USAXS
-`~/Documents/2022-02-10-databroker-2.0-test-usaxs/` | mixed content, typical USAXS
-`~/Documents/raw/` | CSV files from `dhtioc` project
-`~/Documents/specdata/` | SPEC
-
-## Python environment
-
-- create: `micromamba create -n tiled -f environment.yml`
-- use: `micromamba activate tiled`
-
-## Identify Custom Files
-
-[example](https://blueskyproject.io/tiled/how-to/read-custom-formats.html#write-a-custom-function-for-detecting-the-mime-type):
-
-```py
-# custom.py
-
-def detect_mimetype(filepath, mimetype):
-    if mimetype is None:
-        # If we are here, detection based on file extension came up empty.
-        ...
-        mimetype = "text/csv"
-    return mimetype
-```
+- <https://github.com/bluesky/tiled/issues/175>
+- <https://blueskyproject.io/tiled/how-to/read-custom-formats.html#case-2-no-file-extension>
