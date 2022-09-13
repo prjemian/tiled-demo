@@ -89,7 +89,7 @@ trees:
         .hdf: application/x-hdf5
         .webp: image/webp
       readers_by_mimetype:
-        image/avif: image_data:read_image
+        image/avif: ignore_data:read_ignore
         image/bmp: image_data:read_image
         image/gif: image_data:read_image
         image/jpeg: image_data:read_image
