@@ -138,3 +138,6 @@ dev_*.py
 *auth*
 *credentials*
 slapd/
+
+# tiled server
+*.sqlite
