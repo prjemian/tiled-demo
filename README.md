@@ -9,6 +9,9 @@ Demonstrate tiled server and handling of custom formats.
   - [Stretch goals](#stretch-goals)
   - [Links](#links)
 
+note: This repository is not a Python package, just a set of Python modules
+to demonstrate an instance of a tiled data server.
+
 ## Goals
 
 - [x] Write a custom data file identifier.
