@@ -32,11 +32,14 @@ def is_dhtioc_file(filename):
         1615010402.53 51.5 20.6
     """
     with open(filename, "r") as fp:
-        for line_number, content in enumerate(fp.read().splitlines()):
-            if "dhtioc" in content:
-                return True
-            if line_number > 3:
-                break
+        try:
+            for line_number, content in enumerate(fp.read().splitlines()):
+                if "dhtioc" in content:
+                    return True
+                if line_number > 3:
+                    break
+        except UnicodeDecodeError:
+            pass
     return False
 
 
