@@ -133,3 +133,11 @@ dev_*.py
 
 # Microsoft VisualStudio Code Editor
 .vscode/
+
+# Authentication
+*auth*
+*credentials*
+slapd/
+
+# tiled server
+*.sqlite
