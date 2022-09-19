@@ -27,6 +27,7 @@ dependencies:
   - pyarrow
   - pycrypto
   - python-jose
+  - setuptools-scm
   - spec2nexus
   - sqlalchemy
   - typer
