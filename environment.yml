@@ -38,4 +38,4 @@ dependencies:
     # old version: 2.1
     # - https://raw.githubusercontent.com/EPICS-synApps/utils/master/mdaPythonUtils/mdalib-2013.post2-py2.py3-none-any.whl
     # new version: 2.1.1
-    - https://raw.githubusercontent.com/EPICS-synApps/utils/master/mdaPythonUtils/mdalib-2022.post9-py2.py3-none-any.whl
+    - https://raw.githubusercontent.com/EPICS-synApps/support/master/utils/mdaPythonUtils/mdalib-2022.post9-py2.py3-none-any.whl
