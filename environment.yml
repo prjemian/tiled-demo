@@ -30,11 +30,11 @@ dependencies:
   - setuptools-scm
   - spec2nexus
   - sqlalchemy
+  - tiled
   - typer
   - uvicorn
   - watchgod
 
   - pip:
-    - tiled[all]
     # version: 2.1.1
     - https://raw.githubusercontent.com/EPICS-synApps/support/master/utils/mdaPythonUtils/mdalib-2022.post9-py2.py3-none-any.whl
